@@ -13,7 +13,10 @@ jobs:
       contents: write
 
     steps:
+      # Step 1: Checkout the repository
       - uses: actions/checkout@v4
+
+      # Step 2: Generate GitHub Profile Summary Cards
       - uses: vn7n24fzkq/github-profile-summary-cards@release
         env: 
           GITHUB_TOKEN: ${{ secrets.SUMMARY_GITHUB_TOKEN }}
@@ -22,4 +25,23 @@ jobs:
           BRANCH_NAME: "main"
           UTC_OFFSET: 8
           EXCLUDE: ""
-          AUTO_PUSH: true
+          AUTO_PUSH: false  # Disable auto-push, we will handle this manually to troubleshoot
+
+      # Step 3: List generated files in the output folder for debugging
+      - name: List generated files
+        run: ls -al ./profile-summary-card-output/
+
+      # Step 4: Set Git safe directory to avoid permission issues
+      - name: Set Git safe directory
+        run: git config --global --add safe.directory /home/runner/work/github-profile-summary-cards/github-profile-summary-cards
+
+      # Step 5: Check Git status to verify if there are any changes
+      - name: Check Git status
+        run: git status
+
+      # Step 6: Manually add, commit, and push changes
+      - name: Commit and push changes
+        run: |
+          git add ./profile-summary-card-output/
+          git commit -m "Update GitHub Profile Summary Cards"
+          git push origin main
