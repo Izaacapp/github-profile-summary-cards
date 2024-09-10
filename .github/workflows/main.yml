@@ -13,14 +13,14 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4  # Checkout the repo
 
-      - uses: vn7n24fzkq/github-profile-summary-cards@release
+      - uses: vn7n24fzkq/github-profile-summary-cards@release  # Action to generate the cards
         env:
-          GITHUB_TOKEN: ${{ secrets.Statistic-Cards }}  # Use the secret named "Statistic-Cards"
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_GITHUB_TOKEN }}  # Use your GitHub token stored as a secret
         with:
-          USERNAME: Izaacapp
-          BRANCH_NAME: "main"
-          UTC_OFFSET: 8
-          EXCLUDE: ""
-          AUTO_PUSH: true
+          USERNAME: Izaacapp  # Your GitHub username
+          BRANCH_NAME: "main"  # This is the branch to push the cards to
+          UTC_OFFSET: 8  # Your time zone offset (change if necessary)
+          EXCLUDE: ""  # Any languages to exclude
+          AUTO_PUSH: true  # Automatically push the changes
